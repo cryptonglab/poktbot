@@ -1,0 +1,4 @@
+include poktbot/config/config_scheme.yaml
+include poktbot/telegram/layouts/admin.yaml
+include poktbot/telegram/layouts/investor.yaml
+include poktbot/telegram/layouts/sysadmin.yaml

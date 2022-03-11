@@ -1,0 +1,4 @@
+---
+  menu_main:
+      - caption: "📥 Stats"
+        action: "menu_stats"

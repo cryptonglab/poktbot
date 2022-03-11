@@ -1,0 +1,3 @@
+
+class RBACError(Exception):
+    pass

@@ -1,0 +1,8 @@
+site_name: PoktBot
+theme: material
+plugins:
+    - search
+    - macros
+extra:
+    version: 0.0.1
+    project_name: PoktBot

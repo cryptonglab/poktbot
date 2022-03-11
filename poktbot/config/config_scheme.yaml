@@ -1,0 +1,173 @@
+# This is the scheme for the configuration file.
+# These keys can be provided in the configuration file or as environment variables.
+
+---
+# *********************
+# Telegram API secrets
+# *********************
+  - key: "TELEGRAM_API.api_id"
+
+  - key: "TELEGRAM_API.api_hash"
+
+  - key: "TELEGRAM_API.bot_token"
+
+  - key: "TELEGRAM_API.session_path"
+    default_value: "var/lib/poktbot/telegram/sessions/"
+
+  - key: "TELEGRAM_API.session_name"
+    default_value: "poktbot"
+
+# *********************
+# Server configuration
+# *********************
+  - key: "SERVER.log_file_location"
+    default_value: "var/log/poktbot.log"
+
+  # The following database types are supported:
+  #  "joblib" -> A database in a local file, stored with lz4 compression
+  - key: "SERVER.database_type"
+    default_value: "joblib"
+
+  # The secret for the database. Depending on the database type, this secret might be of different nature.
+  # If database type is "joblib" -> the secret must be the local folder for the storage.
+  - key: "SERVER.database_secret"
+    default_value: "var/lib/poktbot/db/"
+
+  - key: "SERVER.nodes"
+    default_value: []
+
+  - key: "SERVER.chain_ids"
+    default_value:
+        "0029": "Algorand"
+        "000D": "Algorand Archival"
+        "0045": "Algorand Testnet"
+        "0A45": "Algorand Testnet Archival"
+        "0030": "Arweave"
+        "0003": "Avalanche"
+        "00A3": "Avalanche Archival"
+        "000E": "Avalanche Fuji"
+        "0004": "Binance Smart Chain"
+        "0010": "Binance Smart Chain Archival"
+        "0011": "Binance Smart Chain Testnet"
+        "0012": "Binance Smart Chain Testnet Archival"
+        "0002": "Bitcoin"
+        "0021": "Ethereum"
+        "0022": "Ethereum Archival"
+        "0028": "Ethereum Archival Trace"
+        "0026": "Ethereum Goerli"
+        "0024": "Ethereum Kovan"
+        "0025": "Ethereum Rinkeby"
+        "0023": "Ethereum Ropsten"
+        "0046": "Evmos"
+        "0005": "FUSE"
+        "000A": "FUSE Archival"
+        "0027": "Gnosis Chain"
+        "000C": "Gnosis Chain Archival"
+        "0040": "Harmony Shard 0"
+        "0A40": "Harmony Shard 0 Archival"
+        "0041": "Harmony Shard 1"
+        "0A41": "Harmony Shard 1 Archival"
+        "0042": "Harmony Shard 2"
+        "0A42": "Harmony Shard 2 Archival"
+        "0043": "Harmony Shard 3"
+        "0A43": "Harmony Shard 3 Archival"
+        "0044": "IoTeX"
+        "0047": "OKExChain"
+        "0001": "Pocket Network"
+        "0009": "Polygon"
+        "000B": "Polygon Archival"
+        "000F": "Polygon Mumbai"
+        "00AF": "Polygon Mumbai Archival"
+        "0006": "Solana"
+        "0031": "Solana Testnet"
+
+  - key: "SERVER.api_url_transactions"
+    default_value: 'https://poktscan.com/api/graphql?opname=transactions'
+
+  - key: "SERVER.api_url_errors"
+    default_value: 'https://poktscan.com/api/graphql?opname=getNodeErrors'
+
+  # How many pages the node API will request at most in a single shot.
+  # Note that this attribute limits the number of HTTP requests made to the API between observer updates.
+  # If the total number of pages retrieved are fewer than the available pages, the database will take several observer
+  # updates to be up to date. In other words: the first update may not fill the database until "now" if the number
+  # of pages to retrieve are greater than this value; but further updates might get up to date.
+  - key: "SERVER.api_max_page_count"
+    default_value: 2
+
+  # Number of elements to retrieve for each API call. The greater, the fewer pages to iterate; but the higher delay in
+  # response time too.
+  - key: "SERVER.api_page_size"
+    default_value: 1000
+
+  - key: "SERVER.api_date_format"
+    default_value: "%Y-%m-%dT%H:%M:%S.%f"
+
+  - key: "SERVER.error_rules"
+    default_value: []
+
+  # This option specifies a limit in errors notification. For instance, launching the application targeting an unseen
+  # node for first time might trigger A LOT of errors if the node is old enough. This way we restrict to notify
+  # errors from the last N days/hours/minutes.
+  - key: "SERVER.errors_notification_max_age"
+    default_value: "1 days"
+
+# *********************
+# PRICES configuration
+# *********************
+  - key: "PRICE.coingecko_url"
+    default_value: "https://api.coingecko.com/api/v3/coins/{cryptocurrency}/market_chart/range?id=pocket-network&vs_currency={currency}&from={start}&to={end}"
+
+  - key: "PRICE.currency"
+    default_value: "eur"
+
+  # Currency alias is the currency suffix name in the column of the files generated in the balances menu.
+  # Have correspondence with the PRICE.currency value.
+  - key: "PRICE.currency_alias"
+    default_value: "Euro"
+
+# *********************
+# RBAC configuration
+#
+# Role Base Access Control configuration data.
+# *********************
+
+  - key: "IDS.sysadmins_ids"
+    default_value: []
+
+  - key: "IDS.admins_ids"
+    default_value: []
+
+  - key: "IDS.investors_ids"
+    default_value: []
+
+  - key: "IDS.whitelisted_ips"
+    default_value:
+      - "10\\.2\\.3\\.4"
+
+
+# *********************
+# Global configuration
+# *********************
+  - key: "CONF.global_timeout"
+    required: false
+    default_value: 20
+
+  - key: "CONF.global_periodic_time"
+    default_value: 240
+
+  - key: "CONF.timezone"
+    default_value: "Europe/Madrid"
+
+  - key: "CONF.date_format"
+    default_value: "%d/%m/%Y %H:%M:%S %z"
+
+  - key: "CONF.last_days_stats_graph"
+    default_value: 15
+
+  # LOGS configuration
+  - key: "LOGS.logon_paths"
+    default_value: "materialdesignicons"
+
+  - key: "LOGS.relay_paths"
+    default_value: "relay"
