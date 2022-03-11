@@ -1,6 +1,6 @@
 # PoktBot
 
-[BADGES HERE]
+[![Documentation Status](https://readthedocs.org/projects/poktbot/badge/?version=latest)](https://poktbot.readthedocs.io/en/latest/?badge=latest)
 
 PoktBot is a Telegram bot that was born with the mission of helping with the daily tracking of PocketNetwork nodes and their staking rewards.
 
@@ -8,8 +8,8 @@ PoktBot is a Telegram bot that was born with the mission of helping with the dai
 
 ## Installation
 
-Installation guide: [https://poktbot.readthedocs.io/installation](https://poktbot.readthedocs.io/).
-
+Installation guide: [https://poktbot.readthedocs.io/en/latest/installation/](https://poktbot.readthedocs.io/en/latest/installation/).
+Configuration guide: [https://poktbot.readthedocs.io/en/latest/configuration/](https://poktbot.readthedocs.io/en/latest/configuration/).
 
 ### Donations
 If you find this useful, please consider to do a donation.  

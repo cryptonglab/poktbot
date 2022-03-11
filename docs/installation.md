@@ -51,7 +51,7 @@ echo "---
 " > "${HOME}/.${BOT_NAME}/config/config.yaml"
 ```
 
-[Read the docs](https://poktbot.readthedocs.io/) for advanced configuration options.
+[https://poktbot.readthedocs.io/en/latest/configuration/](https://poktbot.readthedocs.io/en/latest/configuration/) for advanced configuration options.
 
 
 ## Installing from DOCKER
