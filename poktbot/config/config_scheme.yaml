@@ -112,6 +112,16 @@
   - key: "SERVER.errors_notification_max_age"
     default_value: "1 days"
 
+  - key: "SERVER.rewards_multiplier_date_format"
+    default_value: "%d/%m/%Y %H:%M:%S"
+
+  - key: "SERVER.rewards_multiplier"
+    default_value:
+        - date: "28/02/2022 17:41:00"
+          multiplier: 0.0075
+        - date: "01/01/1970 00:00:00"
+          multiplier: 0.0089
+
 # *********************
 # PRICES configuration
 # *********************

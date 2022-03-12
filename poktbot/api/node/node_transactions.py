@@ -12,6 +12,10 @@ import numpy as np
 import requests
 
 
+REWARDS_MULTIPLIER = {
+
+}
+
 
 class PocketNodeTransactions(PocketNode):
     """
@@ -179,6 +183,12 @@ class PocketNodeTransactions(PocketNode):
         date_format = config["SERVER.api_date_format"]
         limit = config["SERVER.api_page_size"]
         max_pages = config["SERVER.api_max_page_count"]
+        date_format_rewards_multipliers = config["SERVER.rewards_multiplier_date_format"]
+
+        rewards_multiplier_df = pd.DataFrame(config['SERVER.rewards_multiplier'])
+        rewards_multiplier_df['date'] = pd.to_datetime(rewards_multiplier_df['date'],
+                                                       format=date_format_rewards_multipliers).dt.tz_localize("UTC")
+        rewards_multiplier_df = rewards_multiplier_df.sort_values("date")
 
         page_slice = slice(self.current_page,
                            self.current_page + max_pages,
@@ -193,7 +203,7 @@ class PocketNodeTransactions(PocketNode):
             transactions_raw = self._request_transactions(limit=limit, page=page)
             transactions_items = transactions_raw.get("data", {}).get("transactions", {}).get("items", [])
             new_transactions_df = pd.DataFrame(
-                [self._build_transaction_element(tr, date_format) for tr in transactions_items])
+                [self._build_transaction_element(tr, date_format, rewards_multiplier_df=rewards_multiplier_df) for tr in transactions_items])
             is_last_page = new_transactions_df.shape[0] < limit
 
             new_transactions_df = new_transactions_df[new_transactions_df['height'] > self._last_height]
@@ -225,19 +235,23 @@ class PocketNodeTransactions(PocketNode):
         self._logger.debug(f"{self} Found {transactions_df.shape[0]} new transactions")
 
         with self._lock:
-            self._current_page = page + int(not (is_last_page))
+            self._current_page = page + int(not is_last_page)
             self._transactions_df = transactions_df
 
             if transactions_df.shape[0] > 0:
                 self._last_height = transactions_df['height'].max()
                 self._in_staking = transactions_df['in_staking'].iloc[-1]
 
-    def _build_transaction_element(self, transaction_raw_item, date_format):
+    def _build_transaction_element(self, transaction_raw_item, date_format, rewards_multiplier_df):
         """
         Builds the transaction element from the transaction item
         """
+        transaction_time = pd.to_datetime(transaction_raw_item["block_time"], format=date_format)
+
+        rewards_multiplier = self._get_corresponding_reward_multiplier(rewards_multiplier_df, transaction_time)
+
         if "proof" in transaction_raw_item["type"]:
-            amount = int(transaction_raw_item["total_proof"]) * 0.0089
+            amount = int(transaction_raw_item["total_proof"]) * rewards_multiplier
         else:
             amount = transaction_raw_item["amount"] / 1000000
 
@@ -247,12 +261,32 @@ class PocketNodeTransactions(PocketNode):
             "type": transaction_raw_item["type"],
             "chain_id": self._chain_ids.get(transaction_raw_item["chain"], ''),
             "height": transaction_raw_item["height"],
-            "time": pd.to_datetime(transaction_raw_item["block_time"], format=date_format),
+            "time": transaction_time,
             "amount": amount,
-            "memo": transaction_raw_item["memo"]
+            "memo": transaction_raw_item["memo"],
+            "rewards_multiplier": rewards_multiplier
         }
 
         return transaction
+
+    @staticmethod
+    def _get_corresponding_reward_multiplier(rewards_multiplier_table, datetime):
+        """
+        Retrieves the corresponding reward multiplier for the given datetime
+
+        :param rewards_multiplier_table:
+            DataFrame containing two columns: 'date' with datetime objects UTC; and 'multiplier' with the multiplire value.
+
+        :param datetime:
+            Datetime object in UTC.
+
+        :returns:
+            Reward multiplier as a float value.
+        """
+        datetime_mask = datetime > rewards_multiplier_table['date']
+        selected_rewards_multiplier = rewards_multiplier_table[datetime_mask].tail(1)['multiplier'].iloc[0]
+
+        return float(selected_rewards_multiplier)
 
     @property
     def transactions(self):
