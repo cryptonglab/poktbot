@@ -34,7 +34,7 @@ Any opinion, gub found, improve request... will be welcome.
 ## Example
 ![graph](./docs/images/poktbot.gif?raw=true "Graph")
 ### Main menu
-![Main-menu](./docs/images/mainmenu.png?raw=true "main menu")
+![Main-menu](./docs/images/mainmenu.PNG?raw=true "main menu")
 ### Users menu
 ![Add-investor](./docs/images/add_investor.png?raw=true "Add investor menu")
 
