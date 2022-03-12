@@ -19,7 +19,7 @@ Those secrets are used by this package to use your created bot as the communicat
 # NOTE: don't use spaces and/or special characters
 BOT_NAME="poktbot"
 
-mkdir -p "${HOME}/.${BOT_NAME}/var/log/" && mkdir -p "${HOME}/.${BOT_NAME}/var/lib/" && mkdir -p "${HOME}/${BOT_NAME}/config/"
+mkdir -p "${HOME}/.${BOT_NAME}/var/log/" && mkdir -p "${HOME}/.${BOT_NAME}/var/lib/" && mkdir -p "${HOME}/.${BOT_NAME}/config/"
 ```
 
 ### 2. Create the minimum config file
@@ -61,9 +61,9 @@ the installation automatically. In case a manual installation is wanted, jump to
 
 ```bash
 docker run -d \
-    -v "$HOME/${BOT_NAME}/config/":/etc/poktbot/ \
-    -v "$HOME/${BOT_NAME}/var/lib/":/var/lib/poktbot \
-    -v "$HOME/${BOT_NAME}/var/log/":/var/log/  \
+    -v "$HOME/.${BOT_NAME}/config/":/etc/poktbot/ \
+    -v "$HOME/.${BOT_NAME}/var/lib/":/var/lib/poktbot \
+    -v "$HOME/.${BOT_NAME}/var/log/":/var/log/  \
     --restart always \
     --name ${BOT_NAME} \
     --hostname ${BOT_NAME} \

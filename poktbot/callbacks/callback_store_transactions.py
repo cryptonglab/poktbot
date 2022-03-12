@@ -78,9 +78,9 @@ class CallbackStoreTransactions:
 
                 for idx, row in transactions_df_staking.iterrows():
                     if row["type"] == "stake_validator":
-                        message = f"[STAKE] Node {row['wallet']} started staking at {format_date(row['time'])}"
+                        message = f"\U0001F389 \U0001F389\n \U0001F5A5 {row['wallet']}\n \U0001F4C5 {format_date(row['time'])}\n \u2709 Started staking."
                     else:
-                        message = f"[UNSTAKE] Node {row['wallet']} stopped staking at {format_date(row['time'])}"
+                        message = f"\u26A0 \u26A0\n \U0001F5A5 {row['wallet']}\n \U0001F4C5 {format_date(row['time'])}\n \u2709 Begin unstake validator."
 
                     pending_notifications.append(message)
 
