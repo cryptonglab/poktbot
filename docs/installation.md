@@ -3,6 +3,7 @@
 Since {{project_name}} is a Telegram bot, it is first required to sign up a bot into Telegram by following these steps:
 
 * Create a bot with [BotFather](https://core.telegram.org/bots#6-botfather) and write down the **BotId**.
+* Modify you bot in [BotFather](https://core.telegram.org/bots#6-botfather) in `/mybots` menu. Select your bot and `Edit bot`, after that modify commands in `Edit Commands`. Write `menu - Main Menu` and send the message.
 * Login into [https://my.telegram.org](https://my.telegram.org) and create an **API-ID** and **APIHash**, then write them down too.
 * Open a conversation with `@userinfobot`. This bot will send you your **TelegramId**, write it down. 
 
