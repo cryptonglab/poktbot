@@ -44,7 +44,7 @@ Any opinion, gub found, improve request... will be welcome.
 
 ![Balances-File](./docs/images/balances_file.png?raw=true "Balances File")
 
-![Balances](./docs/images/balances.png?raw=true "Balances")
+![Balances](./docs/images/balances.PNG?raw=true "Balances")
 ### Stats Result
 ![Stats-result](./docs/images/stats.png?raw=true "Stats result")
 ### Push messages
