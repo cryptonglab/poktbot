@@ -73,6 +73,9 @@ class Admin(Users, Balances, Stats, Nodes):
 
         relaunch_menu = True
 
+        # Let's display all the nodes being tracked:
+
+
         while relaunch_menu:
             relaunch_menu = await self.menu("menu_nodes", menu_caption="Options:", relaunch_on_exit=False)
 

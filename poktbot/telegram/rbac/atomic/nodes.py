@@ -55,12 +55,16 @@ class Nodes(Role):
             # Update the observer so that next observer update takes this node info
             observer_nodes_transactions = get_observer("nodes_transactions")
             observer_nodes_errors = get_observer("nodes_errors")
+            observer_main = get_observer("main")
 
             observer_nodes_transactions.add(PocketNodeTransactions(node_address=node_address))
             observer_nodes_errors.add(PocketNodeErrors(node_address=node_address))
 
             self._logger.info(f"Client {self.id} added {node_address} to the system")
             await conv.send_message(f"Node added to the system: {node_address}")
+
+            # We force an update in case.
+            observer_main.trigger_update()
 
         finally:
             await menu.delete()
@@ -72,7 +76,7 @@ class Nodes(Role):
         Handles interaction through conversation to remove nodes.
         This method is invoked by the interaction of the user with the telegram bot.
 
-        A menu listing existing admins will be shown. The user must tap one of the elements
+        A menu listing existing nodes will be shown. The user must tap one of the elements
         in order to select the node to be deleted.
 
         :param menu:
@@ -126,4 +130,29 @@ class Nodes(Role):
         finally:
             await menu_ids.delete()
 
+        return True
+
+    async def list_nodes(self, menu=None, **kwargs):
+        """
+        Handles interaction through conversation to list current tracked nodes.
+        This method is invoked by the interaction of the user with the telegram bot.
+
+        A menu listing existing nodes will be shown -- with staking information.
+
+        :param menu:
+            menu that was used to launch this action.
+        """
+        await self._check_preconditions(menu, **kwargs)
+        conv = self._conv
+
+        TICKS = {
+            True: "✔️",
+            False: "❌"
+        }
+
+        observer_nodes_transactions = get_observer("nodes_transactions")
+
+        message = [f"{TICKS[node.in_staking]} {node.address}" for node in observer_nodes_transactions]
+
+        await conv.send_message("\n".join(message))
         return True

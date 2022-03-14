@@ -20,9 +20,11 @@
         action: "send_xlsx"
 
   menu_nodes:
-    - - caption: "Add node"
+    - - caption: "List nodes"
+        action: "list_nodes"
+      - caption: "Add node"
         action: "add_node"
-    - - caption: "Delete node"
+      - caption: "Delete node"
         action: "delete_node"
 
   menu_users:

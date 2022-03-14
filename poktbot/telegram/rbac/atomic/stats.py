@@ -7,9 +7,9 @@ import io
 import numpy as np
 import pandas as pd
 
+import matplotlib
 import matplotlib.pyplot as plt
-
-from poktbot.utils.formatting import df_to_png_bytes
+matplotlib.use('AGG')
 
 
 class Stats(Role):
@@ -30,9 +30,11 @@ class Stats(Role):
         await self._check_preconditions(menu, **kwargs)
         conv = self._conv
 
+        relay_db = get_relaydb("transactions")
         nodes_observer = get_observer("nodes_transactions")
 
-        nodes_addresses = [node.address for node in nodes_observer]
+        # We only make stats for nodes available in the DB
+        nodes_addresses = [node.address for node in nodes_observer if node.address in relay_db]
 
         total_amounts_df, total_amounts_eur_df = self._compute_all_nodes_totals_df(nodes_addresses=nodes_addresses)
 
@@ -167,8 +169,8 @@ class Stats(Role):
 
         total_eur_day_filtered = total_eur_day[
             (total_eur_day.index.year == today.year) & (total_eur_day.index.month == today.month)]
-        total_eur_earns_this_month = total_eur_day.reindex([today]).fillna(0).iloc[0]
-        total_eur_earns_alltime = total_eur_day.fillna(0).sum()
+        total_eur_earns_this_month = total_eur_day_filtered.reindex([today]).fillna(0).iloc[0]
+        total_eur_earns_alltime = total_eur_day_filtered.fillna(0).sum()
 
         avg_pocket_rewards_df = pd.Series({
             "(POKT) Daily earns (avg)": avg_earns_daily,
@@ -200,7 +202,9 @@ class Stats(Role):
 
     @staticmethod
     def _generate_avg_rewards_graph(total_amounts_df, last_days_count=None, currency_name="POKT"):
-        plt.rcParams['figure.figsize'] = (10, 5)
+        # We create the figure
+        fig = plt.figure(figsize=(10, 5))
+        ax = fig.add_subplot(1, 1, 1)
 
         if last_days_count is None:
             config = get_config()
@@ -209,17 +213,33 @@ class Stats(Role):
         now_date = pd.Timestamp.now().date()
 
         avg_day = total_amounts_df.mean(axis=1, skipna=True)
-        avg_day_filtered = avg_day[avg_day.index >= now_date - pd.Timedelta(days=last_days_count)]
+        nodes_count = (~total_amounts_df.isna()).sum(axis=1)
+        days_filter = avg_day.index >= now_date - pd.Timedelta(days=last_days_count)
+
+        avg_day_filtered = avg_day[days_filter]
+        nodes_count_filtered = nodes_count[days_filter]
 
         avg_day_filtered.index = pd.DatetimeIndex(avg_day_filtered.index)
+        avg_day_filtered.name = "Average rewards"
 
-        avg_day_filtered.plot(title=f"Last {last_days_count} days average {currency_name.upper()} rewards by node")
+        nodes_count_filtered.index = avg_day_filtered.index
+        nodes_count_filtered.name = "Number of nodes"
+
+        # Then we plot the graph into the figure
+        avg_day_filtered.plot(title=f"Last {last_days_count} days average {currency_name.upper()} rewards by node",
+                              ax=ax, secondary_y=True, legend=True, color="#00F")
+        ax.bar(nodes_count_filtered.index, nodes_count_filtered.values, color="#8802", label='Number of nodes (Left)')
+        ax.plot(avg_day_filtered.index, avg_day_filtered.values * np.nan, color="#00F", label='Average rewards (Right)')
+        ax.yaxis.set_visible(True)
+        ax.xaxis_date()
+        ax.legend()
         plt.grid()
-        fig = plt.gcf()
 
         with io.BytesIO() as buf:
             fig.savefig(buf, format='jpg')
             buf.seek(0)
             image_bytes = buf.read()
+
+        plt.close(fig)
 
         return image_bytes

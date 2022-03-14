@@ -84,7 +84,8 @@ class Balances(Role):
                    "Date", "Tx-ID", f"Buy Amount {currency_alias}", "wallet", "chain_id"]
         content = []
 
-        nodes_addresses = [node.address for node in nodes_observer]
+        # We only make stats for nodes available in the DB
+        nodes_addresses = [node.address for node in nodes_observer if node.address in relay_db]
 
         for node_address in nodes_addresses:
             transactions_df = relay_db.get(node_address, {}).get("transactions")

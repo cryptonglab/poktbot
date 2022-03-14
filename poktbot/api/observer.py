@@ -65,11 +65,13 @@ class Observer(API):
         if self._thread is None:
             self._initial_observation = initial_observation
             self._logger.info(f"{self} Starting observer")
+            self._stop = False
             self._event.clear()
             self._thread = Thread(target=self._thread_func, daemon=True)
             self._thread.start()
 
     def stop(self):
+        self._stop = True
         self._event.set()
 
         if self._thread is not None:
@@ -81,8 +83,13 @@ class Observer(API):
         if self._initial_observation:
             self.update()
 
-        while not self._event.wait(timeout=self._update_interval):
-            self.update()
+        while not self._stop:
+            while not self._event.wait(timeout=self._update_interval):
+                self.update()
+
+            if not self._stop:
+                self.update()
+                self._event.clear()
 
         with self._lock:
             self._thread = None
@@ -130,3 +137,11 @@ class Observer(API):
 
     def remove_callback(self, callback):
         self._callbacks.remove(callback)
+
+    def trigger_update(self):
+        """
+        Triggers an update of the observer.
+
+        This is a non-locking method.
+        """
+        self._event.set()

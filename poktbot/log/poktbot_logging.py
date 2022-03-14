@@ -2,7 +2,7 @@ import logging
 import os
 
 
-DEFAULT_LOGGING_LEVEL = os.environ.get("LOGGING_LEVEL", "INFO")
+DEFAULT_LOGGING_LEVEL = os.environ.get("LOGGING_LEVEL", "DEBUG")
 
 
 class Logging:

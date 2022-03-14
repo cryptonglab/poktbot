@@ -1,4 +1,5 @@
 from threading import Thread, Lock
+
 from telethon import TelegramClient, events
 
 from poktbot.config import get_config
@@ -83,6 +84,7 @@ class TelegramBot:
 
         self._telethon_bot = TelegramClient(self.session_fqpath, self._api_id, self._api_hash, loop=self._loop).start(bot_token=self._bot_token)
         self._bot = self._telethon_bot
+
         bot = self._bot
 
         async def bot_manager():

@@ -12,11 +12,6 @@ import numpy as np
 import requests
 
 
-REWARDS_MULTIPLIER = {
-
-}
-
-
 class PocketNodeTransactions(PocketNode):
     """
     Represents a PocketNode with basic API implementation for fetching transactions.
