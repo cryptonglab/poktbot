@@ -4,6 +4,7 @@
 [![Documentation Status](https://readthedocs.org/projects/poktbot/badge/?version=v0.0.1)](https://poktbot.readthedocs.io/en/v0.0.1/?badge=v0.0.1)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![stability-experimental](https://img.shields.io/badge/stability-experimental-orange.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#experimental)
+![Docker Pulls](https://img.shields.io/docker/pulls/cryptonglab/poktbot)
 
 PoktBot is a Telegram bot that was born with the mission of helping with the daily tracking of PocketNetwork nodes and their staking rewards.  
 
