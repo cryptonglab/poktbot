@@ -59,7 +59,7 @@ echo "---
 ## Installation with DOCKER
 
 We have generated an official docker image **{{project_name}}** hosted at the docker hub that can be executed to handle 
-the installation automatically. In case a manual installation is wanted, jump to section [section]. 
+the installation automatically. In case a manual installation is wanted, jump to section [Building the image]. 
 
 ```bash
 docker run -d \
@@ -97,6 +97,7 @@ docker run -d \
     cryptonglab/{{project_name_lowercase}}:{{version}}
 ```
 
+[Building the image]: #building-the-image
 
 ## Installation with PIP
 
@@ -143,7 +144,7 @@ TELEGRAM_API_session_path="${HOME}/.${BOT_NAME}/var/lib/telegram/sessions/" \
 If the source code is downloaded, for example:
 
 ```bash
-git clone https://github.com/cryptonglab/poktbot.git -b "{{version}}"
+git clone https://github.com/cryptonglab/poktbot.git -b "v{{version}}"
 ```
 
 It can be installed with python as follows:

@@ -9,10 +9,7 @@ PoktBot is a Telegram bot that was born with the mission of helping with the dai
 
 The bot is highly configurable, allowing to track many nodes at once, to generate graph/reports of rewards and to retrieve notifications based on detected errors and status, among other functionalities.
 
-<img style="display: block; margin: auto;" src="docs/images/poktbot.gif">
-<p style="text-align: center; font-size: small; font-style: italic;">
-Bot's admin interface. It allows to add new nodes, new users and retrieve statistics on the fly.
-</p>
+![graph](./docs/images/poktbot.gif?raw=true "Graph")
 
 ## Docs
 * [Installation guide](https://poktbot.readthedocs.io/en/latest/installation/).
@@ -56,5 +53,3 @@ Any opinion, bug found, improve request... will be welcome.
 ## Authors
 * Iván de Paz (https://github.com/ipazc)
 * Luis F monge (https://github.com/lucky-luk3)
-
-
