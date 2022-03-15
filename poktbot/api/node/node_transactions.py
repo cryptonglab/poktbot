@@ -270,7 +270,8 @@ class PocketNodeTransactions(PocketNode):
         Retrieves the corresponding reward multiplier for the given datetime
 
         :param rewards_multiplier_table:
-            DataFrame containing two columns: 'date' with datetime objects UTC; and 'multiplier' with the multiplire value.
+            DataFrame containing two columns: 'date' with datetime objects UTC; and 'multiplier' with the multiplier
+            value.
 
         :param datetime:
             Datetime object in UTC.

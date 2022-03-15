@@ -3,6 +3,8 @@ theme: material
 plugins:
     - search
     - macros
+repo_url: https://github.com/cryptonglab/poktbot
 extra:
     version: 0.0.1
     project_name: PoktBot
+    project_name_lowercase: poktbot

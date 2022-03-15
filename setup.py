@@ -19,7 +19,7 @@ setup(
     description='Pocket telegram bot for handling nodes tracking information and stats',
     long_description=readme(),
     packages=setuptools.find_packages(exclude=["tests.*", "tests"]),
-    url='https://github.com/lucky-luk3/poktbot',
+    url='https://github.com/cryptonglab/poktbot',
     install_requires=[
         "Telethon==1.10.8",
         "pandas==1.3.5",
