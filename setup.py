@@ -17,6 +17,7 @@ setup(
     name='poktbot',
     version=__version__,
     description='Pocket telegram bot for handling nodes tracking information and stats',
+    long_description_content_type="text/markdown",
     long_description=readme(),
     packages=setuptools.find_packages(exclude=["tests.*", "tests"]),
     url='https://github.com/cryptonglab/poktbot',

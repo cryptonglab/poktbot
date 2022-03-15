@@ -1,7 +1,7 @@
 # PoktBot
 
 [![PyPI version](https://badge.fury.io/py/poktbot.svg)](https://badge.fury.io/py/poktbot)
-[![Documentation Status](https://readthedocs.org/projects/poktbot/badge/?version=latest)](https://poktbot.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/poktbot/badge/?version=v0.0.1)](https://poktbot.readthedocs.io/en/v0.0.1/?badge=v0.0.1)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![stability-experimental](https://img.shields.io/badge/stability-experimental-orange.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#experimental)
 
@@ -9,27 +9,27 @@ PoktBot is a Telegram bot that was born with the mission of helping with the dai
 
 The bot is highly configurable, allowing to track many nodes at once, to generate graph/reports of rewards and to retrieve notifications based on detected errors and status, among other functionalities.
 
-![graph](./docs/images/poktbot.gif?raw=true "Graph")
+![graph](https://raw.githubusercontent.com/cryptonglab/poktbot/v0.0.1/docs/images/poktbot.gif "Graph")
 
 ## Docs
+* [Getting started](https://poktbot.readthedocs.io/en/latest/).
 * [Installation guide](https://poktbot.readthedocs.io/en/latest/installation/).
 * [Configuration guide](https://poktbot.readthedocs.io/en/latest/configuration/).
-* [Read the docs](https://poktbot.readthedocs.io/en/latest/).
 
 
 ## Features
 * Provides an easy way to monitoring Pocket Network validator nodes status.
     * Errors monitoring and notification.  
-    ![Cert-expiration](./docs/images/certificate_expiration_min.png?raw=true "Begin stake")
+    ![Cert-expiration](https://raw.githubusercontent.com/cryptonglab/poktbot/v0.0.1/docs/images/certificate_expiration_min.png "Certification expired")
     * Staking monitoring and notification.  
-    ![Begin-unstake](./docs/images/begin_unstake_min.png?raw=true "Begin unstake")    
+    ![Begin-unstake](https://raw.githubusercontent.com/cryptonglab/poktbot/v0.0.1/docs/images/begin_unstake_min.png "Begin unstake")
   
 
 * Provides useful stats about node rewards and performance.  
     * Daily rewards.
     * Monthly rewards.
     * Graph of rewards evolution.  
-    ![Stats-result](./docs/images/stats.png?raw=true "Stats result")
+    ![Stats-result](https://raw.githubusercontent.com/cryptonglab/poktbot/v0.0.1/docs/images/stats.png "Stats result")
   
 
 * Multi-node and multi-user approach.
@@ -39,8 +39,8 @@ The bot is highly configurable, allowing to track many nodes at once, to generat
         * Admin, same than Investor but also able to add/remove admins, investors and nodes.
         
 * Creation of economic reports to follow node economics or tax filing.  
-![Balances](./docs/images/balances.png?raw=true "Balances")
-
+![Balances](https://raw.githubusercontent.com/cryptonglab/poktbot/v0.0.1/docs/images/balances.png "Balances")
+  
 * Fully configurable behaviour. Every aspect of the bot is configurable with a configuration file, 
 and some options through the bot interface itself.
 
