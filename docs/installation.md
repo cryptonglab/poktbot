@@ -19,7 +19,7 @@ Those secrets are used by this package to use your created bot as the communicat
 ```bash
 # Fill BOT_NAME with a unique name in this host for each bot to be run
 # NOTE: don't use spaces and/or special characters
-BOT_NAME="poktbot"
+BOT_NAME="{{project_name_lowercase}}"
 
 mkdir -p "${HOME}/.${BOT_NAME}/var/log/" && mkdir -p "${HOME}/.${BOT_NAME}/var/lib/" && mkdir -p "${HOME}/.${BOT_NAME}/config/"
 ```
@@ -53,7 +53,7 @@ echo "---
 " > "${HOME}/.${BOT_NAME}/config/config.yaml"
 ```
 
-[https://poktbot.readthedocs.io/en/latest/configuration/](https://poktbot.readthedocs.io/en/latest/configuration/) for advanced configuration options.
+[https://{{project_name_lowercase}}.readthedocs.io/en/v{{version}}/configuration/](https://{{project_name_lowercase}}.readthedocs.io/en/v{{version}}/configuration/) for advanced configuration options.
 
 
 ## Installation with DOCKER
@@ -63,8 +63,8 @@ the installation automatically. In case a manual installation is wanted, jump to
 
 ```bash
 docker run -d \
-    -v "${HOME}/.${BOT_NAME}/config/":/etc/poktbot/ \
-    -v "${HOME}/.${BOT_NAME}/var/lib/":/var/lib/poktbot \
+    -v "${HOME}/.${BOT_NAME}/config/":/etc/{{project_name_lowercase}}/ \
+    -v "${HOME}/.${BOT_NAME}/var/lib/":/var/lib/{{project_name_lowercase}} \
     -v "${HOME}/.${BOT_NAME}/var/log/":/var/log/  \
     --restart always \
     --name ${BOT_NAME} \
@@ -78,8 +78,8 @@ In some restricted environments, you would want to build the image manually.
 It can be done by cloning this repository and building it with `docker build`:
 
 ```bash
-git clone https://github.com/cryptonglab/poktbot.git
-cd poktbot
+git clone https://github.com/cryptonglab/{{project_name_lowercase}}.git -b "v{{version}}"
+cd {{project_name_lowercase}}
 docker build . -t cryptonglab/{{project_name_lowercase}}:{{version}}
 ```
 
@@ -88,8 +88,8 @@ have just built instead of downloading it from the docker hub repository:
 
 ```bash
 docker run -d \
-    -v "${HOME}/.${BOT_NAME}/config/":/etc/poktbot/ \
-    -v "${HOME}/.${BOT_NAME}/var/lib/":/var/lib/poktbot \
+    -v "${HOME}/.${BOT_NAME}/config/":/etc/{{project_name_lowercase}}/ \
+    -v "${HOME}/.${BOT_NAME}/var/lib/":/var/lib/{{project_name_lowercase}} \
     -v "${HOME}/.${BOT_NAME}/var/log/":/var/log/  \
     --restart always \
     --name ${BOT_NAME} \
@@ -102,21 +102,21 @@ docker run -d \
 ## Installation with PIP
 
 Even though we encourage the installation with docker, **{{project_name}}** can also be installed with pip since it is 
-also part of the [Python Package Index repository](https://pypi.org/project/poktbot/).
+also part of the [Python Package Index repository](https://pypi.org/project/{{project_name_lowercase}}/).
 
 ```bash
-pip install poktbot=={{version}}
+pip install {{project_name_lowercase}}=={{version}}
 ```
 
-Once installed, a CMD tool with the name `poktbot` will be available to run the bot, but certain environment variables
+Once installed, a CMD tool with the name `{{project_name_lowercase}}` will be available to run the bot, but certain environment variables
 related to the storage volume should be set before running it:
 
 ```bash
 TELEGRAM_API_session_path="${HOME}/.${BOT_NAME}/var/lib/telegram/sessions/" \
     SERVER_database_secret="${HOME}/.${BOT_NAME}/var/lib/db/" \
-    SERVER_log_file_location="${HOME}/.${BOT_NAME}/var/log/poktbot.log" \
+    SERVER_log_file_location="${HOME}/.${BOT_NAME}/var/log/{{project_name_lowercase}}.log" \
     CONFIG_PATH="${HOME}/.${BOT_NAME}/config/config.yaml" \
-    poktbot
+    {{project_name_lowercase}}
 ```
 
 ### Installation with PIP from repository
@@ -125,18 +125,18 @@ In restricted environments, installing from the repository is also possible. The
 within the repository so that it can be installed with PIP:
 
 ```bash
-pip install https://github.com/cryptonglab/poktbot/tree/{{version}}
+pip install git+https://github.com/cryptonglab/{{project_name_lowercase}}@v{{version}}
 ```
 
-Once installed, a CMD tool with the name `poktbot` will be available to run the bot, but certain environment variables
+Once installed, a CMD tool with the name `{{project_name_lowercase}}` will be available to run the bot, but certain environment variables
 related to the storage volume should be set before running it:
 
 ```bash
 TELEGRAM_API_session_path="${HOME}/.${BOT_NAME}/var/lib/telegram/sessions/" \
     SERVER_database_secret="${HOME}/.${BOT_NAME}/var/lib/db/" \
-    SERVER_log_file_location="${HOME}/.${BOT_NAME}/var/log/poktbot.log" \
+    SERVER_log_file_location="${HOME}/.${BOT_NAME}/var/log/{{project_name_lowercase}}.log" \
     CONFIG_PATH="${HOME}/.${BOT_NAME}/config/config.yaml" \
-    poktbot
+    {{project_name_lowercase}}
 ```
 
 ### Installation with python from repository
@@ -144,22 +144,22 @@ TELEGRAM_API_session_path="${HOME}/.${BOT_NAME}/var/lib/telegram/sessions/" \
 If the source code is downloaded, for example:
 
 ```bash
-git clone https://github.com/cryptonglab/poktbot.git -b "v{{version}}"
+git clone https://github.com/cryptonglab/{{project_name_lowercase}}.git -b "v{{version}}"
 ```
 
 It can be installed with python as follows:
 ```bash
-cd poktbot
+cd {{project_name_lowercase}}
 python setup.py install
 ```
 
-Once installed, a CMD tool with the name `poktbot` will be available to run the bot, but certain environment variables
+Once installed, a CMD tool with the name `{{project_name_lowercase}}` will be available to run the bot, but certain environment variables
 related to the storage volume should be set before running it:
 
 ```bash
 TELEGRAM_API_session_path="${HOME}/.${BOT_NAME}/var/lib/telegram/sessions/" \
     SERVER_database_secret="${HOME}/.${BOT_NAME}/var/lib/db/" \
-    SERVER_log_file_location="${HOME}/.${BOT_NAME}/var/log/poktbot.log" \
+    SERVER_log_file_location="${HOME}/.${BOT_NAME}/var/log/{{project_name_lowercase}}.log" \
     CONFIG_PATH="${HOME}/.${BOT_NAME}/config/config.yaml" \
-    poktbot
+    {{project_name_lowercase}}
 ```

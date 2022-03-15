@@ -13,9 +13,9 @@ The bot is highly configurable, allowing to track many nodes at once, to generat
 ![graph](https://raw.githubusercontent.com/cryptonglab/poktbot/v0.0.1/docs/images/poktbot.gif "Graph")
 
 ## Docs
-* [Getting started](https://poktbot.readthedocs.io/en/latest/).
-* [Installation guide](https://poktbot.readthedocs.io/en/latest/installation/).
-* [Configuration guide](https://poktbot.readthedocs.io/en/latest/configuration/).
+* [Getting started](https://poktbot.readthedocs.io/en/v0.0.1/).
+* [Installation guide](https://poktbot.readthedocs.io/en/v0.0.1/installation/).
+* [Configuration guide](https://poktbot.readthedocs.io/en/v0.0.1/configuration/).
 
 
 ## Features
