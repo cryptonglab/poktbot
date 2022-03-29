@@ -84,6 +84,9 @@
   - key: "SERVER.api_url_transactions"
     default_value: 'https://poktscan.com/api/graphql?opname=transactions'
 
+  - key: "SERVER.api_url_rewards"
+    default_value: 'https://api.pokt.tools/node/{node_address}/rewards'
+
   - key: "SERVER.api_url_errors"
     default_value: 'https://poktscan.com/api/graphql?opname=getNodeErrors'
 
@@ -111,16 +114,6 @@
   # errors from the last N days/hours/minutes.
   - key: "SERVER.errors_notification_max_age"
     default_value: "1 days"
-
-  - key: "SERVER.rewards_multiplier_date_format"
-    default_value: "%d/%m/%Y %H:%M:%S"
-
-  - key: "SERVER.rewards_multiplier"
-    default_value:
-        - date: "28/02/2022 17:41:00"
-          multiplier: 0.0075303
-        - date: "01/01/1970 00:00:00"
-          multiplier: 0.0089
 
 # *********************
 # PRICES configuration

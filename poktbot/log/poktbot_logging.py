@@ -15,7 +15,7 @@ class Logging:
     def __init__(self, level=DEFAULT_LOGGING_LEVEL):
         self._level = level
         self._handlers = [logging.StreamHandler()]
-        self._formatter = logging.Formatter('[%(threadName)s] %(asctime)s - %(name)s - %(levelname)-2s %(message)s ')
+        self._formatter = logging.Formatter('[%(levelname)-2s %(threadName)s] %(asctime)s - %(name)s - %(message)s ')
         self._loggers = {}
 
         for handler in self._handlers:

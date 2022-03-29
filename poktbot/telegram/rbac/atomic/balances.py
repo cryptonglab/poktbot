@@ -81,7 +81,7 @@ class Balances(Role):
 
         columns = ["Type", "Buy Amount", "Buy Cur.", "Sell Amount", "Sell Cur.", "Fee Amount (optional)",
                    "Fee Cur. (optional)", "Exchange (optional)", "Trade Group (optional)", "Comment (optional)",
-                   "Date", "Tx-ID", f"Buy Amount {currency_alias}", "wallet", "chain_id"]
+                   "Date", "Tx-ID", f"Buy Amount {currency_alias}", "Wallet", "Chain_id", "Confirmed"]
         content = []
 
         # We only make stats for nodes available in the DB
@@ -94,9 +94,9 @@ class Balances(Role):
                 continue
 
             for row_index, row_content in transactions_df.iterrows():
-                if "proof" in row_content["type"]:
+                if "claim" in row_content["type"]:
                     content_element = [
-                        "Minería",
+                        "Minning",
                         str(row_content["amount"]).replace(".", ","),
                         "POKT", "", "", "", "", "Pocket", "", "",
                         format_date(row_content["time"]),
@@ -104,6 +104,7 @@ class Balances(Role):
                         str(row_content[f"amount_price_{currency}"]).replace(".", ","),
                         row_content["wallet"],
                         row_content["chain_id"],
+                        row_content["confirmed"],
                     ]
 
                     content.append(content_element)

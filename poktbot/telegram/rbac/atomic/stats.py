@@ -32,6 +32,7 @@ class Stats(Role):
 
         relay_db = get_relaydb("transactions")
         nodes_observer = get_observer("nodes_transactions")
+        config = get_config()
 
         # We only make stats for nodes available in the DB
         nodes_addresses = [node.address for node in nodes_observer if node.address in relay_db]
@@ -46,13 +47,15 @@ class Stats(Role):
 
         rewards_graph_bytes = self._generate_avg_rewards_graph(total_amounts_df)
 
+        currency_symbol = config.get("PRICE.currency", "eur").upper()
+
         message = f"📈 Stats:\n" \
                   f"\t\t\t\t**{avg_pocket_rewards_df.iloc[1]} POKTs today (avg).**\n" \
-                  f"\t\t\t\t{avg_pocket_rewards_eur_df.iloc[1]} EURs today (avg).\n" \
+                  f"\t\t\t\t{avg_pocket_rewards_eur_df.iloc[1]} {currency_symbol}s today (avg).\n" \
                   f"\t\t\t\t{avg_pocket_rewards_df.iloc[0]} POKTs everyday (avg).\n" \
-                  f"\t\t\t\t{avg_pocket_rewards_eur_df.iloc[0]} EURs everyday (avg).\n" \
+                  f"\t\t\t\t{avg_pocket_rewards_eur_df.iloc[0]} {currency_symbol}s everyday (avg).\n" \
                   f"\t\t\t\t{avg_pocket_rewards_df.iloc[3]} POKTs this month (avg).\n" \
-                  f"\t\t\t\t{avg_pocket_rewards_eur_df.iloc[3]} EURs this month (avg).\n" \
+                  f"\t\t\t\t{avg_pocket_rewards_eur_df.iloc[3]} {currency_symbol}s this month (avg).\n" \
 
         await conv.send_message(message=message)
         
@@ -68,7 +71,7 @@ class Stats(Role):
         relay_db = get_relaydb("transactions")
 
         transactions = relay_db[node_address]['transactions']
-        proof_transactions = transactions[transactions['type'].str.contains('proof')]
+        proof_transactions = transactions[transactions['type'].str.contains('claim')]
 
         # 1. We compute the daily staking mask
         cleaned_transactions = transactions.drop_duplicates("time").set_index("time")
