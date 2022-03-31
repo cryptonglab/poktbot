@@ -249,7 +249,7 @@ class PocketNodeTransactions(PocketNode):
             rewards_df = rewards_df[rewards_df['height'] <= transactions_df['height'].max()]
 
         # We merge the rewards_df into the transactions_df
-        transactions_df = pd.concat([transactions_df, rewards_df], axis=0).sort_values("height")
+        transactions_df = pd.concat([transactions_df, rewards_df], axis=0).sort_values("height").reset_index(drop=True)
 
         # Some of the transactions might be in staking period, some others not. We compute them.
         # A column called 'in_staking' is added to the transactions dataframe.
@@ -259,8 +259,8 @@ class PocketNodeTransactions(PocketNode):
 
             staking_mask = np.zeros(transactions_df.shape[0]) * np.nan
 
-            staking_mask[staking_start] = 1
-            staking_mask[staking_end] = 0
+            staking_mask[staking_start.values] = 1
+            staking_mask[staking_end.values] = 0
 
             if np.isnan(staking_mask[0]):
                 staking_mask[0] = self._in_staking

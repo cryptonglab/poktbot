@@ -57,7 +57,7 @@ class RelayDBjl(RelayDB):
         try:
             with self._lock:
                 self.update(joblib.load(self._filename))
-        except FileNotFoundError:
+        except (FileNotFoundError, EOFError):
             self._logger.warning("Could not load the database, file doesn't exist. Is it a new instance?")
 
         end = timer()

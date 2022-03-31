@@ -82,7 +82,13 @@ class TelegramBot:
         self._logger.info(f"Starting telegram session on {self.session_fqpath}")
         os.makedirs(self._session_path, exist_ok=True)
 
-        self._telethon_bot = TelegramClient(self.session_fqpath, self._api_id, self._api_hash, loop=self._loop).start(bot_token=self._bot_token)
+        try:
+            self._telethon_bot = TelegramClient(self.session_fqpath, self._api_id, self._api_hash, loop=self._loop).start(bot_token=self._bot_token)
+        except TypeError:
+            # We delete the session
+            os.remove(f"{self.session_fqpath}.session")
+            self._telethon_bot = TelegramClient(self.session_fqpath, self._api_id, self._api_hash, loop=self._loop).start(bot_token=self._bot_token)
+
         self._bot = self._telethon_bot
 
         bot = self._bot
