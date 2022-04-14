@@ -9,8 +9,11 @@
     - - caption: "👮🏻‍ Users"
         action: "menu_users"
 
-    - - caption: "Nodes"
+      - caption: "Nodes"
         action: "menu_nodes"
+
+    - - caption: "Info"
+        action: "show_info"
 
   menu_balances:
     - - caption: "CSV"

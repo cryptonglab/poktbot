@@ -81,39 +81,11 @@
         "0006": "Solana"
         "0031": "Solana Testnet"
 
-  - key: "SERVER.api_url_transactions"
-    default_value: 'https://poktscan.com/api/graphql?opname=transactions'
-
   - key: "SERVER.api_url_rewards"
     default_value: 'https://api.pokt.tools/node/{node_address}/rewards'
 
-  - key: "SERVER.api_url_errors"
-    default_value: 'https://poktscan.com/api/graphql?opname=getNodeErrors'
-
-  # How many pages the node API will request at most in a single shot.
-  # Note that this attribute limits the number of HTTP requests made to the API between observer updates.
-  # If the total number of pages retrieved are fewer than the available pages, the database will take several observer
-  # updates to be up to date. In other words: the first update may not fill the database until "now" if the number
-  # of pages to retrieve are greater than this value; but further updates might get up to date.
-  - key: "SERVER.api_max_page_count"
-    default_value: 2
-
-  # Number of elements to retrieve for each API call. The greater, the fewer pages to iterate; but the higher delay in
-  # response time too.
-  - key: "SERVER.api_page_size"
-    default_value: 1000
-
   - key: "SERVER.api_date_format"
     default_value: "%Y-%m-%dT%H:%M:%S.%f"
-
-  - key: "SERVER.error_rules"
-    default_value: []
-
-  # This option specifies a limit in errors notification. For instance, launching the application targeting an unseen
-  # node for first time might trigger A LOT of errors if the node is old enough. This way we restrict to notify
-  # errors from the last N days/hours/minutes.
-  - key: "SERVER.errors_notification_max_age"
-    default_value: "1 days"
 
 # *********************
 # PRICES configuration
@@ -144,20 +116,14 @@
   - key: "IDS.investors_ids"
     default_value: []
 
-  - key: "IDS.whitelisted_ips"
-    default_value:
-      - "10\\.2\\.3\\.4"
-
-
 # *********************
 # Global configuration
 # *********************
   - key: "CONF.global_timeout"
-    required: false
     default_value: 20
 
   - key: "CONF.global_periodic_time"
-    default_value: 240
+    default_value: 3600
 
   - key: "CONF.timezone"
     default_value: "Europe/Madrid"
@@ -168,9 +134,11 @@
   - key: "CONF.last_days_stats_graph"
     default_value: 15
 
-  # LOGS configuration
-  - key: "LOGS.logon_paths"
-    default_value: "materialdesignicons"
+  - key: "CONF.release_url"
+    default_value: "https://pypi.org/pypi/poktbot/json"
 
-  - key: "LOGS.relay_paths"
-    default_value: "relay"
+  - key: "CONF.release_docs"
+    default_value: "https://poktbot.readthedocs.io/en/latest/"
+
+  - key: "CONF.notify_releases"
+    default_value: true

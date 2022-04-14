@@ -3,7 +3,7 @@ import asyncio
 from telethon import Button, events
 
 from poktbot.api import get_observer
-from poktbot.api.node import PocketNodeTransactions, PocketNodeErrors
+from poktbot.api.node import PocketNodeTransactions
 from poktbot.config import get_config
 from poktbot.telegram.exceptions.rbac_error import RBACError
 from poktbot.telegram.rbac.role import Role
@@ -54,11 +54,9 @@ class Nodes(Role):
 
             # Update the observer so that next observer update takes this node info
             observer_nodes_transactions = get_observer("nodes_transactions")
-            observer_nodes_errors = get_observer("nodes_errors")
             observer_main = get_observer("main")
 
             observer_nodes_transactions.add(PocketNodeTransactions(node_address=node_address))
-            observer_nodes_errors.add(PocketNodeErrors(node_address=node_address))
 
             self._logger.info(f"Client {self.id} added {node_address} to the system")
             await conv.send_message(f"Node added to the system: {node_address}")
@@ -104,19 +102,10 @@ class Nodes(Role):
 
             # Update the observer so that next observer update doesn't take this node info
             observer_nodes_transactions = get_observer("nodes_transactions")
-            observer_nodes_errors = get_observer("nodes_errors")
-
-            observer_nodes_transactions.add(PocketNodeTransactions(node_address=node_address))
-            observer_nodes_errors.add(PocketNodeErrors(node_address=node_address))
 
             for node in observer_nodes_transactions:
                 if node.address == node_address:
                     observer_nodes_transactions.remove(node)
-                    break
-
-            for node in observer_nodes_errors:
-                if node.address == node_address:
-                    observer_nodes_errors.remove(node)
                     break
 
             self._logger.info(f"Client {self.id} removed node {node_address} from the system")

@@ -6,8 +6,6 @@ from poktbot.storage import get_relaydb
 import pandas as pd
 import numpy as np
 
-from poktbot.utils.formatting import format_date
-
 
 class CallbackStoreTransactions:
     """
@@ -15,9 +13,8 @@ class CallbackStoreTransactions:
 
     This is usually invoked after all the nodes information and the prices from a price provider is fetched.
     """
-    def __init__(self, notify_staking_callback=None):
+    def __init__(self):
         self._logger = poktbot_logging.get_logger("CallbackStoreTransactions")
-        self._notify_staking_callback = notify_staking_callback
 
     def __call__(self, *args, **kwargs):
         self._logger.debug("Triggered store of transactions (if any)")
@@ -29,8 +26,6 @@ class CallbackStoreTransactions:
         currency = config.get("PRICE.currency", "eur")
 
         # Notifications to telegram are queued here and notified at the end of the function
-        pending_notifications = []
-
         with relay_db.bulk_op() as db:
 
             for node in observer_nodes_transactions:
@@ -67,26 +62,10 @@ class CallbackStoreTransactions:
                 node_db_persistence["transactions"] = node_transactions
 
                 # Now we store the status for this node transactions
-                node_db_persistence["current_page"] = node.current_page
                 node_db_persistence["last_height"] = node.last_height
                 node_db_persistence["in_staking"] = node.in_staking
 
                 self._logger.info(f"Stored {transactions_df.shape[0]} new transactions in database for node {node.address}")
-
-                # We check for staking transactions:
-                transactions_df_staking = transactions_df[transactions_df['type'].str.contains('stake')]
-
-                for idx, row in transactions_df_staking.iterrows():
-                    if row["type"] == "stake_validator":
-                        message = f"\U0001F389 \U0001F389\n \U0001F5A5 {row['wallet']}\n \U0001F4C5 {format_date(row['time'])}\n \u2709 Started staking."
-                    else:
-                        message = f"\u26A0 \u26A0\n \U0001F5A5 {row['wallet']}\n \U0001F4C5 {format_date(row['time'])}\n \u2709 Begin unstake validator."
-
-                    pending_notifications.append(message)
-
-        # Notifications to telegram
-        if len(pending_notifications) > 0 and self._notify_staking_callback is not None:
-            self._notify_staking_callback(pending_notifications)
 
     @staticmethod
     def _get_closest_value(datetimes, values_to_lookup):

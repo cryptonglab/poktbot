@@ -13,7 +13,7 @@ class Observer(API):
 
     After an update, a callback is triggered (on_update). A callback can be set by `set_callback()` method.
     """
-    def __init__(self, elements, update_interval, on_update=None, observer_name=None, pool_size=2):
+    def __init__(self, elements, update_interval, on_update=None, observer_name=None, pool_size=1):
         """
         Constructor of the class.
 
@@ -36,6 +36,7 @@ class Observer(API):
         :param pool_size:
             Size of the internal pool. If there are many elements to be observed, their observation can be parallelized
             in a thread pool.
+
         """
         super().__init__()
 
@@ -55,7 +56,7 @@ class Observer(API):
         self._callbacks = []
 
         if on_update is not None:
-            self.set_callback(on_update)
+            self.add_callback(on_update)
 
     @property
     def name(self):
@@ -120,7 +121,7 @@ class Observer(API):
 
     def update(self):
         self._logger.debug(f"{self} Update triggered")
-        promises = [self._pool.submit(l.update) for l in self._elements]
+        promises = [self._pool.submit(element.update) for element in self._elements]
         concurrent.futures.wait(promises)
 
         for callback in self._callbacks:
